@@ -1,8 +1,12 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-export default function ResultScreen({ route }) {
+export default function ResultScreen({ route , navigation}) {
   const { results, searchOption } = route.params;
+
+  const handlePress = (item) => {
+    navigation.navigate('Details', {item, searchOption});
+  }
 
   return (
     <View style={styles.container}>
@@ -14,7 +18,6 @@ export default function ResultScreen({ route }) {
         renderItem={({ item }) => {
 
           if (searchOption === 'Artist') {
-            console.log('Image URL:', item.artworkUrl100);
 
             return (
               <View style={styles.itemContainer}>
