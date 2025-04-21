@@ -33,7 +33,7 @@ export default function SearchScreen({ navigation }) {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <Text style={styles.title}>
-          Search for your favourite artist or song
+        Find any artist or track
         </Text>
 
         <TextInput
