@@ -1,50 +1,43 @@
-# Welcome to your Expo app 👋
+# 🎵 ISeek - Music & Artist Finder App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+_ISeek_ est une application mobile développée avec **React Native** qui utilise l'API publique d’iTunes pour rechercher des artistes ou des morceaux, afficher les détails, attribuer une note, et sauvegarder ses favoris dans une collection personnelle.
 
-## Get started
+---
 
-1. Install dependencies
+## 🚀 Fonctionnalités
 
-   ```bash
-   npm install
-   ```
+### 🔍 Recherche
+- Recherche d'**artistes** ou de **morceaux** via l’API iTunes.
+- Affichage des résultats avec nom, album, genre, et pochette pour les morceaux.
 
-2. Start the app
+### 📄 Résultats interactifs
+- Chaque résultat est **sélectionnable** pour afficher une **fiche détaillée** :
+  - 🎤 Artiste : nom et genre.
+  - 🎶 Morceau : nom, artiste, album, genre, image.
 
-   ```bash
-    npx expo start
-   ```
+### ⭐ Notation personnalisée
+- Système de **notation** en étoiles (1 à 5) pour chaque élément (stockée localement).
 
-In the output, you'll find options to open the app in a
+### 📁 Collection personnelle
+- Ajout d’un artiste ou morceau à une **collection personnelle** locale.
+- Affichage dans l’onglet `My Collection` :
+  - Séparé en **"Saved Songs"** et **"Saved Artists"**.
+  - Possibilité de **supprimer** chaque élément.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 📱 Stack technique
 
-## Get a fresh project
+- **React Native**
+- **Expo**
+- **React Navigation**
+- **AsyncStorage** pour le stockage local
+- **API iTunes** (`https://itunes.apple.com/search`)
 
-When you're ready, run:
+---
 
-```bash
-npm run reset-project
-```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 👨‍💻 Auteur
+- Sramaner Maitriya
 
-## Learn more
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.

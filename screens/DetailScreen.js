@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function DetailScreen({ route }) {
   const { item, searchOption } = route.params;
   const [selectedRating, setSelectedRating] = useState(0);
-  
-  // Clé unique pour chaque item basée sur son ID
+
+  // Crée une clé unique pour sauvegarder la note en fonction du type (artiste ou chanson)
   const storageKey = `rating_${searchOption === 'Artist' ? item.artistId : item.trackId}`;
-  
-  // Charger la note sauvegardée au chargement de l'écran
+
+  // Chargement automatique de la note si elle existe déjà
   useEffect(() => {
     const loadRating = async () => {
       try {
@@ -21,11 +21,11 @@ export default function DetailScreen({ route }) {
         console.error('Erreur lors du chargement de la note:', error);
       }
     };
-    
+
     loadRating();
   }, [storageKey]);
-  
-  // Fonction pour sauvegarder la note
+
+  // Sauvegarde la note dans AsyncStorage
   const saveRating = async (rating) => {
     try {
       await AsyncStorage.setItem(storageKey, rating.toString());
@@ -35,14 +35,45 @@ export default function DetailScreen({ route }) {
     }
   };
 
+  // Ajoute le contenu (musique ou artiste) dans la collection de l’utilisateur
+  const handleSaving = async () => {
+    const key = 'myCollection';
+    try {
+      const existing = await AsyncStorage.getItem(key);
+      const parsed = existing ? JSON.parse(existing) : [];
+
+      // Vérifie si l’élément existe déjà dans la collection
+      const alreadyExists = parsed.some((el) => {
+        if (searchOption === 'Artist') {
+          return el.artistId === item.artistId && !el.trackId;
+        } else {
+          return el.trackId === item.trackId;
+        }
+      });
+
+      // Si non présent, on l’ajoute
+      if (!alreadyExists) {
+        const updated = [...parsed, item];
+        await AsyncStorage.setItem(key, JSON.stringify(updated));
+        alert('Added ✅');
+      } else {
+        alert('Already added 😉');
+      }
+    } catch (e) {
+      console.error('Erreur ajout :', e);
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      {/* Vue spécifique pour artiste */}
       {searchOption === 'Artist' ? (
         <>
           <Text style={styles.title}>{item.artistName}</Text>
           <Text style={styles.genre}>Genre : {item.primaryGenreName}</Text>
         </>
       ) : (
+        // Vue spécifique pour une chanson
         <>
           <Image
             source={{ uri: item.artworkUrl100 }}
@@ -55,8 +86,13 @@ export default function DetailScreen({ route }) {
           <Text style={styles.genre}>🎼 Genre : {item.primaryGenreName}</Text>
         </>
       )}
-      
-      {/* Système de notation  */}
+
+      {/* Bouton d’ajout à la collection */}
+      <TouchableOpacity style={styles.button} onPress={handleSaving}>
+        <Text style={styles.buttonText}>Add to library</Text>
+      </TouchableOpacity>
+
+      {/* Système de notation avec étoiles */}
       <View style={styles.ratingRow}>
         {[1, 2, 3, 4, 5].map((star) => (
           <Text
@@ -72,6 +108,7 @@ export default function DetailScreen({ route }) {
   );
 }
 
+// Styles pour l’interface
 const styles = StyleSheet.create({
   container: {
     padding: 24,
@@ -110,12 +147,12 @@ const styles = StyleSheet.create({
   genre: {
     fontSize: 16,
     color: '#777',
-    marginBottom: 30, 
+    marginBottom: 30,
   },
   ratingRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 20, 
+    marginTop: 20,
   },
   star: {
     fontSize: 24,
@@ -126,5 +163,20 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginHorizontal: 4,
     opacity: 1,
+  },
+  button: {
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 25,
+    marginVertical: 16,
+    elevation: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minWidth: 200,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
