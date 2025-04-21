@@ -38,13 +38,13 @@ export default function SearchScreen( {navigation} ) {
         <SafeAreaProvider>
             <SafeAreaView style={styles.container}>
                 <Text style={styles.title}>
-                    Search your song
+                    Seach for your favourite artist or song
                 </Text>
                 <TextInput
                     style={styles.input}
                     value={searchTerm}
                     onChangeText={setSearchTerm}
-                    placeholder="Rechercher..."
+                    placeholder="Search..."
                 />
                 
                 <View style={styles.filterContainer}>
@@ -55,7 +55,7 @@ export default function SearchScreen( {navigation} ) {
                         ]}
                         onPress={() => setSearchOption('Artist')}
                     >
-                        <Text style={styles.filterText}>Artiste</Text>
+                        <Text style={styles.filterText}>Artist</Text>
                     </TouchableOpacity>
                     
                     <TouchableOpacity
@@ -65,7 +65,7 @@ export default function SearchScreen( {navigation} ) {
                         ]}
                         onPress={() => setSearchOption('Music')}
                     >
-                        <Text style={styles.filterText}>Morceau</Text>
+                        <Text style={styles.filterText}>Song</Text>
                     </TouchableOpacity>
                 </View>
                 

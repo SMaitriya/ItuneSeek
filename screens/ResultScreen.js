@@ -20,12 +20,14 @@ export default function ResultScreen({ route , navigation}) {
           if (searchOption === 'Artist') {
 
             return (
+              <TouchableOpacity onPress={() => handlePress(item)}>
               <View style={styles.itemContainer}>
                 <Text style={styles.resultText}>
                   {item.artistName}
                   <Text style={styles.label}>{'\n'}Genre :</Text> {item.primaryGenreName}
                 </Text>
               </View>
+              </TouchableOpacity>
             );
           } else {
             return (
